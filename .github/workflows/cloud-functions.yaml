@@ -35,6 +35,8 @@ jobs:
           echo "INSIDER_PARTNER_NAME: ${{ secrets.INSIDER_PARTNER_NAME }}" >> ${{ env.ENV_FILE }}
           echo "INSIDER_REQUEST_TOKEN: ${{ secrets.INSIDER_REQUEST_TOKEN }}" >> ${{ env.ENV_FILE }}
 
+          echo "KLAVIYO_TOKEN: ${{ secrets.KLAVIYO_TOKEN }}" >> ${{ env.ENV_FILE }}
+
       - uses: actions/upload-artifact@v3
         with:
           name: ${{ env.ENV_KEY }}
