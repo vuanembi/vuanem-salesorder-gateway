@@ -8,4 +8,5 @@ client.interceptors.request.use((req) => {
     return req;
 });
 
-export const track = (data: TrackDto) => client.post('track', data);
+export const track = (data: TrackDto) =>
+    client.post('track', data).then(({ data }) => data);
