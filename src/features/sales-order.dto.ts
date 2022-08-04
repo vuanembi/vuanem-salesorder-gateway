@@ -1,13 +1,14 @@
 export type Customer = {
     phone: string;
-    email: string;
-    dob: string;
+    email: string | null;
+    dob: string | null;
     loyalty: string;
 };
 
 export type Item = {
-    sku: string;
-    rate: number;
+    itemtype: string;
+    sku: string | null;
+    rate: number | null;
     amount: number;
     quantity: number;
 };

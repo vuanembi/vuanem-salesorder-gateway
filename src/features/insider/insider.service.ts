@@ -1,3 +1,5 @@
+import { range } from 'lodash';
+
 import { SalesOrder } from '../sales-order.dto';
 import { Identifiers, Attributes, Event } from './insider.dto';
 import * as InsiderRepo from './insider.repo';
@@ -14,17 +16,25 @@ export const upsert = ({ customer, order }: SalesOrder) => {
         custom: { loyalty: customer.loyalty },
     };
 
-    const events: Event[] = order.items.map((item) => ({
-        event_name: 'purchase',
-        timestamp: order.createddate,
-        event_params: {
-            product_id: item.sku,
-            unit_price: item.rate,
-            unit_sale_price: item.amount,
-            event_group_id: order.tranid,
-            currency: 'VND',
-        },
-    }));
+    const events: Event[] = order.items.flatMap((item) => {
+        const { quantity, itemtype } = item;
+
+        return itemtype === 'InvtPart'
+            ? range(quantity).map(() => ({
+                  event_name: 'purchase',
+                  timestamp: order.createddate,
+                  event_params: {
+                      product_id: item.sku,
+                      unit_price: item.rate || item.amount / quantity,
+                      unit_sale_price: item.amount / quantity,
+                      event_group_id: order.tranid,
+                      currency: 'VND',
+                  },
+              }))
+            : [];
+    });
+
+    events
 
     return InsiderRepo.upsert({ users: [{ identifiers, attributes, events }] });
 };
