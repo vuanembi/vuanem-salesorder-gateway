@@ -1,7 +1,7 @@
 export type Identifiers = {
     uuid: string;
     phone_number: string;
-    email: string | null;
+    email?: string;
 };
 
 export type Attributes = {

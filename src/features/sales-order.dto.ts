@@ -10,7 +10,7 @@ export type Item = {
     sku: string | null;
     rate: number | null;
     amount: number;
-    quantity: number;
+    quantity: number | null;
 };
 
 export type SalesOrder = {

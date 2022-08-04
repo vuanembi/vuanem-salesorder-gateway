@@ -7,7 +7,7 @@ import * as InsiderRepo from './insider.repo';
 export const upsert = ({ customer, order }: SalesOrder) => {
     const identifiers: Identifiers = {
         uuid: customer.phone,
-        email: customer.email,
+        email: customer.email || undefined,
         phone_number: '+84' + customer.phone.slice(1),
     };
 
@@ -19,7 +19,7 @@ export const upsert = ({ customer, order }: SalesOrder) => {
     const events: Event[] = order.items.flatMap((item) => {
         const { quantity, itemtype } = item;
 
-        return itemtype === 'InvtPart'
+        return itemtype === 'InvtPart' && quantity
             ? range(quantity).map(() => ({
                   event_name: 'purchase',
                   timestamp: order.createddate,
