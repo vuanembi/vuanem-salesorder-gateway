@@ -32,7 +32,6 @@ jobs:
         run: echo "::set-output name=fn-name::${{ env.FUNCTION_NAME}}"
 
       - run: |
-          echo "INSIDER_PARTNER_NAME: ${{ secrets.INSIDER_PARTNER_NAME }}" >> ${{ env.ENV_FILE }}
           echo "INSIDER_REQUEST_TOKEN: ${{ secrets.INSIDER_REQUEST_TOKEN }}" >> ${{ env.ENV_FILE }}
 
           echo "KLAVIYO_TOKEN: ${{ secrets.KLAVIYO_TOKEN }}" >> ${{ env.ENV_FILE }}
