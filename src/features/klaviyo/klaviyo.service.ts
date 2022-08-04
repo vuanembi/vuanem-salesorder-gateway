@@ -22,7 +22,7 @@ export const track = ({ customer, order }: SalesOrder) => {
         trandate: toDate(order.trandate),
         items: order.items.map((item) => ({
             name: item.sku,
-            quantity: item.quantity,
+            quantity: item.quantity || 0,
             amount: item.amount,
         })),
     };
