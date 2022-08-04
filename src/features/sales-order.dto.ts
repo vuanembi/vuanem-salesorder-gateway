@@ -17,6 +17,7 @@ export type SalesOrder = {
     customer: Customer;
     order: {
         createddate: string;
+        trandate: string;
         tranid: string;
         items: Item[];
     };

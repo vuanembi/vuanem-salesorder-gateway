@@ -34,7 +34,5 @@ export const upsert = ({ customer, order }: SalesOrder) => {
             : [];
     });
 
-    events
-
     return InsiderRepo.upsert({ users: [{ identifiers, attributes, events }] });
 };
