@@ -10,12 +10,17 @@ const app = express();
 app.post('/', (req, res) => {
     const { body }: { body: SalesOrder } = req;
 
+    console.log(body);
+
     Promise.all(
         [InsiderService.upsert, KlaviyoService.track].map((service) =>
             service(body),
         ),
     )
-        .then(() => res.status(200).json({ ok: true }))
+        .then((result) => {
+            console.log(result);
+            res.status(200).json({ ok: true });
+        })
         .catch((err) => res.status(500).json({ err }));
 });
 
