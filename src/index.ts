@@ -18,7 +18,7 @@ app.post('/', (req, res) => {
         ),
     )
         .then((result) => {
-            console.log(result);
+            console.log(JSON.stringify(result));
             res.status(200).json({ ok: true });
         })
         .catch((err) => res.status(500).json({ err }));
