@@ -10,7 +10,7 @@ export const track = ({ customer, order }: SalesOrder) => {
 
     const customerProperties: Customer = {
         $email: 'bi@vuanem.com',
-        $phone_number: customer.phone,
+        $phone_number: '+84' + customer.phone.slice(1),
         dob: customer.dob ? toDate(customer.dob) : null,
         loyalty: customer.loyalty,
     };
