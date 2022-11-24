@@ -10,5 +10,6 @@ const client = axios.create({
     },
 });
 
-export const upsert = (data: UpsertDto) =>
-    client.post('user/v1/upsert', data).then(({ data }) => data);
+export const upsert = async (data: UpsertDto) => {
+    return client.post('user/v1/upsert', data);
+};

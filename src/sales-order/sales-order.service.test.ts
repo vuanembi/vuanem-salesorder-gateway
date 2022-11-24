@@ -1,9 +1,10 @@
-import { SalesOrder } from './sales-order.dto';
+import { SalesOrderDto } from './sales-order.dto';
+import { upsertInsiderPurchase, trackKlaviyoPlacedOrder } from './sales-order.service';
 
-export const payload: SalesOrder = {
+export const payload: SalesOrderDto = {
     customer: {
         phone: '0785356303',
-        email: null,
+        email: 'bi@vuanem.com',
         dob: '1992-02-28T08:00:00.000Z',
         loyalty: 'SILVER',
     },
@@ -43,3 +44,22 @@ export const payload: SalesOrder = {
         ],
     },
 };
+
+it('Upsert Insider Purchase', async () => {
+    return upsertInsiderPurchase(payload).then((res) => {
+        console.log(res.data);
+        expect(res.status).toBe(200);
+    });
+});
+
+it('Track Klaviyo Placed Order', async () => {
+    const res = await trackKlaviyoPlacedOrder(payload);
+
+    if (!res) {
+        return;
+    } else {
+        console.log(res.data);
+        expect(res.status).toBe(200);
+        return
+    }
+});

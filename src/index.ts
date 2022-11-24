@@ -1,27 +1,22 @@
 import { http } from '@google-cloud/functions-framework';
 import express from 'express';
 
-import { SalesOrder } from './features/sales-order.dto';
-import * as InsiderService from './features/insider/insider.service';
-import * as KlaviyoService from './features/klaviyo/klaviyo.service';
+import { SalesOrderDto } from './sales-order/sales-order.dto';
+import { upsertInsiderPurchase, trackKlaviyoPlacedOrder } from './sales-order/sales-order.service';
 
 const app = express();
 
 app.post('/', (req, res) => {
-    const { body }: { body: SalesOrder } = req;
+    const { body }: { body: SalesOrderDto } = req;
 
-    console.log(body);
+    console.log('body', JSON.stringify(body));
 
-    Promise.all(
-        [InsiderService.upsert, KlaviyoService.track].map((service) =>
-            service(body),
-        ),
-    )
-        .then((result) => {
-            console.log(JSON.stringify(result));
-            res.status(200).json({ ok: true });
-        })
-        .catch((err) => res.status(500).json({ err }));
+    Promise.allSettled(
+        [upsertInsiderPurchase, trackKlaviyoPlacedOrder].map((service) => service(body)),
+    ).then((result) => {
+        console.log('result', JSON.stringify(result));
+        res.status(200).json({ result });
+    });
 });
 
 http('main', app);
