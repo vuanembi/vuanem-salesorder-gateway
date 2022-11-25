@@ -1,4 +1,5 @@
 import { range, sumBy } from 'lodash';
+import numeral from 'numeral';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
@@ -16,6 +17,10 @@ export const toUSD = (value: number) => value / 23350;
 
 export const toDate = (value: string) =>
     dayjs.utc(value).tz('Asia/Ho_Chi_minh').format('YYYY-MM-DD');
+
+export const prettifyNumber = (value: number) => {
+    return numeral(value).format('0,0');
+};
 
 export const upsertInsiderPurchase = ({ customer, order }: SalesOrderDto) => {
     if (!customer.phone) {
@@ -80,8 +85,11 @@ export const trackKlaviyoPlacedOrder = ({ customer, order }: SalesOrderDto) => {
                 sku: item.sku,
                 displayname: item.displayname,
                 quantity: item.quantity || 0,
-                amount: item.grossamt,
+                grossamt: item.grossamt,
+                grossamt_pretty: numeral(item.grossamt).format('0,0'),
             })),
+            grossamt: sumBy(order.items, (item) => item.grossamt),
+            grossamt_pretty: numeral(sumBy(order.items, (item) => item.grossamt)).format('0,0'),
         },
     };
 

@@ -21,7 +21,10 @@ export type TrackPlacedOrderDto = TrackDto<
             sku: string;
             displayname?: string;
             quantity: number;
-            amount: number;
+            grossamt: number;
+            grossamt_pretty: string;
         }[];
+        grossamt: number;
+        grossamt_pretty: string;
     }
 >;
