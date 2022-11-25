@@ -1,8 +1,8 @@
 export type SalesOrderDto = {
     customer: {
-        phone: string;
-        email: string | null;
-        dob: string | null;
+        phone?: string;
+        email?: string;
+        dob?: string;
         loyalty: string;
     };
     order: {
@@ -11,10 +11,11 @@ export type SalesOrderDto = {
         tranid: string;
         items: {
             itemtype: string;
-            sku: string | null;
-            rate: number | null;
+            sku: string;
+            displayname?: string;
+            grossamt: number;
             amount: number;
-            quantity: number | null;
+            quantity?: number | null;
         }[];
     };
 };

@@ -2,54 +2,59 @@ import { SalesOrderDto } from './sales-order.dto';
 import { upsertInsiderPurchase, trackKlaviyoPlacedOrder } from './sales-order.service';
 
 export const payload: SalesOrderDto = {
-    customer: {
-        phone: '0785356303',
-        email: 'bi@vuanem.com',
-        dob: '1992-02-28T08:00:00.000Z',
-        loyalty: 'SILVER',
-    },
     order: {
-        createddate: '2022-08-04T09:45:00.000Z',
-        trandate: '2022-08-04T07:00:00.000Z',
-        tranid: 'SOHMI44-KC00000541',
+        createddate: '2021-04-02T03:49:00.000Z',
+        trandate: '2021-04-02T07:00:00.000Z',
+        tranid: 'SOHNI11-KC00005457',
         items: [
             {
                 itemtype: 'InvtPart',
-                sku: '1103001001011',
-                rate: 8140000,
-                amount: 7537037,
+                sku: '1104005001003',
+                displayname: 'Đệm Massage Nhật Bản Color Foam Goodnight 180*200*09',
+                grossamt: 4950000,
+                amount: 4500000,
                 quantity: 1,
             },
             {
                 itemtype: 'Discount',
-                sku: 'Discount: 15 %',
-                rate: -15,
-                amount: -1130556,
-                quantity: null,
+                sku: 'Discount: 20 %',
+                grossamt: -990000,
+                amount: -900000,
             },
             {
                 itemtype: 'InvtPart',
-                sku: '1301008998001',
-                rate: 790000,
-                amount: 731481,
+                sku: '1301001010002',
+                displayname: 'Ruột gối Doona Promo 45*65*700gr 920',
+                grossamt: 125000,
+                amount: 113636,
                 quantity: 1,
             },
             {
                 itemtype: 'Discount',
-                sku: 'Discount: 100 %',
-                rate: -100,
-                amount: -731481,
-                quantity: null,
+                sku: 'Coupon - Fixed Amount 641 MAR',
+                grossamt: -116001,
+                amount: -105455,
             },
         ],
+    },
+    customer: {
+        phone: '0773314403',
+        email: 'hieu.mai@vuanem.com.vn',
+        dob: '1998-10-31T08:00:00.000Z',
+        loyalty: 'SILVER',
     },
 };
 
 it('Upsert Insider Purchase', async () => {
-    return upsertInsiderPurchase(payload).then((res) => {
+    const res = await upsertInsiderPurchase(payload);
+
+    if (!res) {
+        return;
+    } else {
         console.log(res.data);
         expect(res.status).toBe(200);
-    });
+        return;
+    }
 });
 
 it('Track Klaviyo Placed Order', async () => {
@@ -60,6 +65,6 @@ it('Track Klaviyo Placed Order', async () => {
     } else {
         console.log(res.data);
         expect(res.status).toBe(200);
-        return
+        return;
     }
 });

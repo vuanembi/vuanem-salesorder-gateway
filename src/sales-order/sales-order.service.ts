@@ -18,6 +18,10 @@ export const toDate = (value: string) =>
     dayjs.utc(value).tz('Asia/Ho_Chi_minh').format('YYYY-MM-DD');
 
 export const upsertInsiderPurchase = ({ customer, order }: SalesOrderDto) => {
+    if (!customer.phone) {
+        return;
+    }
+
     const upsertDto: UpsertDto = {
         users: [
             {
@@ -39,8 +43,8 @@ export const upsertInsiderPurchase = ({ customer, order }: SalesOrderDto) => {
                               timestamp: order.createddate,
                               event_params: {
                                   product_id: item.sku,
-                                  unit_price: item.rate || item.amount / quantity,
-                                  unit_sale_price: item.amount / quantity,
+                                  unit_price: item.grossamt / quantity,
+                                  unit_sale_price: item.grossamt / quantity,
                                   event_group_id: order.tranid,
                                   currency: 'VND',
                               },
@@ -55,7 +59,7 @@ export const upsertInsiderPurchase = ({ customer, order }: SalesOrderDto) => {
 };
 
 export const trackKlaviyoPlacedOrder = ({ customer, order }: SalesOrderDto) => {
-    if (!customer.email) {
+    if (!customer.phone || !customer.email) {
         return;
     }
 
@@ -73,14 +77,13 @@ export const trackKlaviyoPlacedOrder = ({ customer, order }: SalesOrderDto) => {
             tranid: order.tranid,
             trandate: toDate(order.trandate),
             items: order.items.map((item) => ({
-                name: item.sku,
+                sku: item.sku,
+                displayname: item.displayname,
                 quantity: item.quantity || 0,
-                amount: item.amount,
+                amount: item.grossamt,
             })),
         },
     };
-
-    console.log(JSON.stringify(trackDto));
 
     return KlaviyoService.track(trackDto);
 };

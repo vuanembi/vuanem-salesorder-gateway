@@ -6,7 +6,7 @@ export type UpsertDto = {
             email?: string;
         };
         attributes: {
-            birthday: string | null;
+            birthday?: string;
             custom: {
                 loyalty: string;
             };

@@ -18,7 +18,8 @@ export type TrackPlacedOrderDto = TrackDto<
         tranid: string;
         trandate: string;
         items: {
-            name: string | null;
+            sku: string;
+            displayname?: string;
             quantity: number;
             amount: number;
         }[];
