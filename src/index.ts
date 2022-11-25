@@ -13,9 +13,9 @@ app.post('/', (req, res) => {
 
     const services = [upsertInsiderPurchase, trackKlaviyoPlacedOrder];
 
-    Promise.allSettled(services.map((service) => service(body))).then((result) => {
-        console.log('result', JSON.stringify(result));
-        res.status(200).json({ result });
+    Promise.allSettled(services.map((service) => service(body))).then((results) => {
+        const response = results.map((result) => result.status);
+        res.status(200).json({ response });
     });
 });
 
