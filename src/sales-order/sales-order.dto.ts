@@ -9,6 +9,7 @@ export type SalesOrderDto = {
         createddate: string;
         trandate: string;
         tranid: string;
+        shipaddress: string;
         items: {
             itemtype: string;
             sku: string;

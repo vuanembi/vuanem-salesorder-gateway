@@ -17,6 +17,7 @@ export type TrackPlacedOrderDto = TrackDto<
     {
         tranid: string;
         trandate: string;
+        shipaddress: string;
         items: {
             sku: string;
             displayname?: string;

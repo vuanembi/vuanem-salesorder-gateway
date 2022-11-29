@@ -81,6 +81,11 @@ export const trackKlaviyoPlacedOrder = ({ customer, order }: SalesOrderDto) => {
             $value: toUSD(sumBy(order.items, (item) => item.amount)),
             tranid: order.tranid,
             trandate: toDate(order.trandate),
+            shipaddress: order.shipaddress
+                .split('\n')
+                .map((str) => str.trim())
+                .map((str) => str.replace(/(^,)|(,$)/g, ''))
+                .join(' | '),
             items: order.items.map((item) => ({
                 sku: item.sku,
                 displayname: item.displayname,

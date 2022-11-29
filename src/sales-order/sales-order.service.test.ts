@@ -6,6 +6,8 @@ export const payload: SalesOrderDto = {
         createddate: '2021-04-02T03:49:00.000Z',
         trandate: '2021-04-02T07:00:00.000Z',
         tranid: 'SOHNI11-KC00005457',
+        shipaddress:
+            'Anh Lê Văn Tân\nHH 11-18 - Khu ĐT Vinhomes Star City\nThanh Hóa, Thanh Hóa,  \nVietnam',
         items: [
             {
                 itemtype: 'InvtPart',
