@@ -27,5 +27,6 @@ export type TrackPlacedOrderDto = TrackDto<
         }[];
         grossamt: number;
         grossamt_pretty: string;
+        order_type?: string;
     }
 >;

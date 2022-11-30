@@ -68,6 +68,16 @@ export const trackKlaviyoPlacedOrder = ({ customer, order }: SalesOrderDto) => {
         return;
     }
 
+    const classifyOrderType = () => {
+        enum OrderType {
+            WITH_MATTRESS = 'with-mattress',
+        }
+
+        if (order.items.some((item) => item.sku.match(/^11/))) {
+            return OrderType.WITH_MATTRESS;
+        }
+    };
+
     const trackDto: TrackPlacedOrderDto = {
         event: 'Placed Order',
         customer_properties: {
@@ -95,6 +105,7 @@ export const trackKlaviyoPlacedOrder = ({ customer, order }: SalesOrderDto) => {
             })),
             grossamt: sumBy(order.items, (item) => item.grossamt),
             grossamt_pretty: numeral(sumBy(order.items, (item) => item.grossamt)).format('0,0'),
+            order_type: classifyOrderType(),
         },
     };
 

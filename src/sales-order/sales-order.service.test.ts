@@ -1,3 +1,5 @@
+import { v4 as uuid4 } from 'uuid';
+
 import { SalesOrderDto } from './sales-order.dto';
 import { upsertInsiderPurchase, trackKlaviyoPlacedOrder } from './sales-order.service';
 
@@ -5,7 +7,7 @@ export const payload: SalesOrderDto = {
     order: {
         createddate: '2021-04-02T03:49:00.000Z',
         trandate: '2021-04-02T07:00:00.000Z',
-        tranid: 'SOHNI11-KC00005457',
+        tranid: uuid4(),
         shipaddress:
             'Anh Lê Văn Tân\nHH 11-18 - Khu ĐT Vinhomes Star City\nThanh Hóa, Thanh Hóa,  \nVietnam',
         items: [
