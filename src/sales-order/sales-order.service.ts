@@ -81,7 +81,7 @@ export const trackKlaviyoPlacedOrder = ({ customer, order }: SalesOrderDto) => {
     const trackDto: TrackPlacedOrderDto = {
         event: 'Placed Order',
         customer_properties: {
-            $email: 'bi@vuanem.com',
+            $email: customer.email,
             $phone_number: '+84' + customer.phone.slice(1),
             dob: customer.dob ? toDate(customer.dob) : null,
             loyalty: customer.loyalty,
